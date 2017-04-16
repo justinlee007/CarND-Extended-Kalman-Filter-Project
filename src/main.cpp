@@ -2,18 +2,16 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <stdlib.h>
 #include "Eigen/Dense"
 #include "FusionEKF.h"
 #include "ground_truth_package.h"
-#include "measurement_package.h"
 
 using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using std::vector;
 
-void check_arguments(int argc, char* argv[]) {
+void check_arguments(int argc, char *argv[]) {
   string usage_instructions = "Usage instructions: ";
   usage_instructions += argv[0];
   usage_instructions += " path/to/input.txt output.txt";
@@ -36,8 +34,8 @@ void check_arguments(int argc, char* argv[]) {
   }
 }
 
-void check_files(ifstream& in_file, string& in_name,
-                 ofstream& out_file, string& out_name) {
+void check_files(ifstream &in_file, string &in_name,
+                 ofstream &out_file, string &out_name) {
   if (!in_file.is_open()) {
     cerr << "Cannot open input file: " << in_name << endl;
     exit(EXIT_FAILURE);
@@ -49,7 +47,7 @@ void check_files(ifstream& in_file, string& in_name,
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 
   check_arguments(argc, argv);
 
@@ -66,8 +64,7 @@ int main(int argc, char* argv[]) {
 
   string line;
 
-  // prep the measurement packages (each line represents a measurement at a
-  // timestamp)
+  // prep the measurement packages (each line represents a measurement at a timestamp)
   while (getline(in_file_, line)) {
 
     string sensor_type;
@@ -131,11 +128,10 @@ int main(int argc, char* argv[]) {
   vector<VectorXd> estimations;
   vector<VectorXd> ground_truth;
 
-  //Call the EKF-based fusion
+  // Call the EKF-based fusion
   size_t N = measurement_pack_list.size();
   for (size_t k = 0; k < N; ++k) {
-    // start filtering from the second frame (the speed is unknown in the first
-    // frame)
+    // start filtering from the second frame (the speed is unknown in the first frame)
     fusionEKF.ProcessMeasurement(measurement_pack_list[k]);
 
     // output the estimation

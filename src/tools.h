@@ -4,7 +4,7 @@
 #include "Eigen/Dense"
 
 class Tools {
-public:
+ public:
   /**
   * Constructor.
   */
@@ -23,7 +23,7 @@ public:
   /**
   * A helper method to calculate Jacobians.
   */
-  Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd& x_state);
+  Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd &x_state);
 
 };
 
