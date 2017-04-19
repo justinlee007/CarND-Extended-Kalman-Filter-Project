@@ -105,6 +105,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     }
 
     // done initializing, no need to predict or update
+    previous_timestamp_ = measurement_pack.timestamp_;
     is_initialized_ = true;
     return;
   }
@@ -114,7 +115,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    ****************************************************************************/
 
   // compute the time elapsed between the current and previous measurements
-  float dt = (float) ((measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0); // dt - expressed in seconds
+  float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0F; // dt - expressed in seconds
   previous_timestamp_ = measurement_pack.timestamp_;
 
   double dt_2 = pow(dt, 2);
