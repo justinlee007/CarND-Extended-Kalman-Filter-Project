@@ -39,16 +39,15 @@ void KalmanFilter::Update(const VectorXd &z) {
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-  VectorXd hx(3);
   double px = x_(0);
   double py = x_(1);
   double vx = x_(2);
   double vy = x_(3);
   double c1 = sqrt(pow(px, 2) + pow(py, 2));
-  hx << c1,
+  VectorXd z_pred(3);
+  z_pred << c1,
       atan(py / px),
       (px * vx + py * vy) / c1;
-  VectorXd z_pred = hx;
   VectorXd y = z - z_pred;
   MatrixXd Ht = H_.transpose();
   MatrixXd S = H_ * P_ * Ht + R_;
