@@ -74,16 +74,16 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     cout << "EKF: " << endl;
     ekf_.x_ = VectorXd(4);
     ekf_.x_ << 1, 1, 1, 1;
-    double x = 0.0;
-    double y = 0.0;
-    double xdot = 0.0;
-    double ydot = 0.0;
+    float x = 0.0;
+    float y = 0.0;
+    float xdot = 0.0;
+    float ydot = 0.0;
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
       // Convert radar from polar to cartesian coordinates and initialize state.
-      double ro = measurement_pack.raw_measurements_[0];
-      double phi = measurement_pack.raw_measurements_[1];
-      double rodot = measurement_pack.raw_measurements_[2];
+      float ro = measurement_pack.raw_measurements_[0];
+      float phi = measurement_pack.raw_measurements_[1];
+      float rodot = measurement_pack.raw_measurements_[2];
       x = ro * cos(phi);
       y = ro * sin(phi);
       xdot = rodot * cos(phi);
@@ -118,9 +118,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0F; // dt - expressed in seconds
   previous_timestamp_ = measurement_pack.timestamp_;
 
-  double dt_2 = pow(dt, 2);
-  double dt_3 = pow(dt, 3);
-  double dt_4 = pow(dt, 4);
+  float dt_2 = pow(dt, 2);
+  float dt_3 = pow(dt, 3);
+  float dt_4 = pow(dt, 4);
 
   // Modify the F matrix so that the time is integrated
   ekf_.F_(0, 2) = dt;
